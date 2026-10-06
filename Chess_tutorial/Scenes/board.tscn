@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5xblqofcwad0"]
 
 [ext_resource type="Texture2D" uid="uid://cvtyb4gj5y33x" path="res://Assets/Chess_board.png" id="1_ukvpm"]
-[ext_resource type="Script" path="res://Scenes/chess.gd" id="2_3ilqf"]
+[ext_resource type="Script" uid="uid://b5ih7wv5ahtpv" path="res://Scenes/chess.gd" id="2_3ilqf"]
 
 [node name="Board" type="Sprite2D"]
 position = Vector2(72, -72)

@@ -1,8 +1,8 @@
-[gd_scene load_steps=37 format=3 uid="uid://wumwx2sgq27v"]
+[gd_scene format=3 uid="uid://wumwx2sgq27v"]
 
 [ext_resource type="Texture2D" uid="uid://ctsgdmugmedg5" path="res://Assets/white_knight.png" id="1_3khqn"]
 [ext_resource type="PackedScene" uid="uid://c5xblqofcwad0" path="res://Scenes/board.tscn" id="1_63gbl"]
-[ext_resource type="Script" path="res://Scenes/Multiplayer.gd" id="1_kblsc"]
+[ext_resource type="Script" uid="uid://dgfveux3hd88e" path="res://Scenes/Multiplayer.gd" id="1_kblsc"]
 [ext_resource type="Texture2D" uid="uid://dn55e0qqy2f8g" path="res://Assets/white_bishop.png" id="2_75nc3"]
 [ext_resource type="Texture2D" uid="uid://ctq0j6xxcqikw" path="res://Assets/white_rook.png" id="3_a7xec"]
 [ext_resource type="Texture2D" uid="uid://oqqp46qtmwfu" path="res://Assets/white_queen.png" id="4_2yafp"]
@@ -14,10 +14,10 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kgqrv"]
 texture = ExtResource("1_3khqn")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_djh8o"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xu268"]
 texture = ExtResource("1_3khqn")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xu268"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_djh8o"]
 texture = ExtResource("1_3khqn")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s8r64"]
@@ -27,77 +27,77 @@ texture = ExtResource("1_3khqn")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rn6hk"]
 texture = ExtResource("2_75nc3")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r62nm"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dj85t"]
 texture = ExtResource("2_75nc3")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dj85t"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r62nm"]
 texture = ExtResource("2_75nc3")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6730i"]
 texture = ExtResource("3_a7xec")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xahkn"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oeqcr"]
 texture = ExtResource("3_a7xec")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oeqcr"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xahkn"]
 texture = ExtResource("3_a7xec")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fj2iu"]
 texture = ExtResource("4_2yafp")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jh1bq"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mj4nn"]
 texture = ExtResource("4_2yafp")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mj4nn"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jh1bq"]
 texture = ExtResource("4_2yafp")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5lcsg"]
 texture = ExtResource("5_cqk1v")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0e7vx"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_krrsb"]
 texture = ExtResource("5_cqk1v")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_krrsb"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0e7vx"]
 texture = ExtResource("5_cqk1v")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cnoic"]
 texture = ExtResource("6_cavfs")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cgwqf"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lj782"]
 texture = ExtResource("6_cavfs")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lj782"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cgwqf"]
 texture = ExtResource("6_cavfs")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_peht4"]
 texture = ExtResource("7_wianj")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6mk8i"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cavm8"]
 texture = ExtResource("7_wianj")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cavm8"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6mk8i"]
 texture = ExtResource("7_wianj")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vgg4r"]
 texture = ExtResource("8_df1ci")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uj42o"]
-texture = ExtResource("8_df1ci")
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_etk7k"]
 texture = ExtResource("8_df1ci")
 
-[node name="Main" type="Node2D"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uj42o"]
+texture = ExtResource("8_df1ci")
+
+[node name="Main" type="Node2D" unique_id=402242581]
 script = ExtResource("1_kblsc")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1858781108]
 position = Vector2(72, -72)
 ignore_rotation = false
 zoom = Vector2(4, 4)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=978865421]
 
-[node name="white_pieces" type="Control" parent="CanvasLayer"]
+[node name="white_pieces" type="Control" parent="CanvasLayer" unique_id=322418960]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -112,50 +112,50 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="2" type="Button" parent="CanvasLayer/white_pieces" groups=["white_pieces"]]
+[node name="2" type="Button" parent="CanvasLayer/white_pieces" unique_id=139361887 groups=["white_pieces"]]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_kgqrv")
-theme_override_styles/hover = SubResource("StyleBoxTexture_djh8o")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_xu268")
+theme_override_styles/hover = SubResource("StyleBoxTexture_djh8o")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="3" type="Button" parent="CanvasLayer/white_pieces" groups=["white_pieces"]]
+[node name="3" type="Button" parent="CanvasLayer/white_pieces" unique_id=1092500946 groups=["white_pieces"]]
 layout_mode = 0
 offset_left = 100.0
 offset_right = 200.0
 offset_bottom = 100.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_rn6hk")
-theme_override_styles/hover = SubResource("StyleBoxTexture_r62nm")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_dj85t")
+theme_override_styles/hover = SubResource("StyleBoxTexture_r62nm")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="4" type="Button" parent="CanvasLayer/white_pieces" groups=["white_pieces"]]
+[node name="4" type="Button" parent="CanvasLayer/white_pieces" unique_id=179529727 groups=["white_pieces"]]
 layout_mode = 0
 offset_left = 200.0
 offset_right = 300.0
 offset_bottom = 100.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_6730i")
-theme_override_styles/hover = SubResource("StyleBoxTexture_xahkn")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_oeqcr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_xahkn")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="5" type="Button" parent="CanvasLayer/white_pieces" groups=["white_pieces"]]
+[node name="5" type="Button" parent="CanvasLayer/white_pieces" unique_id=1760505675 groups=["white_pieces"]]
 layout_mode = 0
 offset_left = 300.0
 offset_right = 400.0
 offset_bottom = 100.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_fj2iu")
-theme_override_styles/hover = SubResource("StyleBoxTexture_jh1bq")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_mj4nn")
+theme_override_styles/hover = SubResource("StyleBoxTexture_jh1bq")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="black_pieces" type="Control" parent="CanvasLayer"]
+[node name="black_pieces" type="Control" parent="CanvasLayer" unique_id=2090525566]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -170,47 +170,47 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="2" type="Button" parent="CanvasLayer/black_pieces" groups=["black_pieces"]]
+[node name="2" type="Button" parent="CanvasLayer/black_pieces" unique_id=121908391 groups=["black_pieces"]]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_5lcsg")
-theme_override_styles/hover = SubResource("StyleBoxTexture_0e7vx")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_krrsb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_0e7vx")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="3" type="Button" parent="CanvasLayer/black_pieces" groups=["black_pieces"]]
+[node name="3" type="Button" parent="CanvasLayer/black_pieces" unique_id=900418585 groups=["black_pieces"]]
 layout_mode = 0
 offset_left = 100.0
 offset_right = 200.0
 offset_bottom = 100.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_cnoic")
-theme_override_styles/hover = SubResource("StyleBoxTexture_cgwqf")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_lj782")
+theme_override_styles/hover = SubResource("StyleBoxTexture_cgwqf")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="4" type="Button" parent="CanvasLayer/black_pieces" groups=["black_pieces"]]
+[node name="4" type="Button" parent="CanvasLayer/black_pieces" unique_id=410186169 groups=["black_pieces"]]
 layout_mode = 0
 offset_left = 200.0
 offset_right = 300.0
 offset_bottom = 100.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_peht4")
-theme_override_styles/hover = SubResource("StyleBoxTexture_6mk8i")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_cavm8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_6mk8i")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="5" type="Button" parent="CanvasLayer/black_pieces" groups=["black_pieces"]]
+[node name="5" type="Button" parent="CanvasLayer/black_pieces" unique_id=1446773803 groups=["black_pieces"]]
 layout_mode = 0
 offset_left = 300.0
 offset_right = 400.0
 offset_bottom = 100.0
 theme_override_styles/normal = SubResource("StyleBoxTexture_vgg4r")
-theme_override_styles/hover = SubResource("StyleBoxTexture_uj42o")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_etk7k")
+theme_override_styles/hover = SubResource("StyleBoxTexture_uj42o")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="Board" parent="." instance=ExtResource("1_63gbl")]
+[node name="Board" parent="." unique_id=1365474169 instance=ExtResource("1_63gbl")]

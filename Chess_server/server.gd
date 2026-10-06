@@ -502,4 +502,3 @@ func is_promotion_square(start_pos, end_pos) -> bool:
 			return true
 			
 	return false
-
