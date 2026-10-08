@@ -572,7 +572,7 @@ func threefold_position(var1 : Array):
 
 func is_promotion_square(start_pos, end_pos) -> bool:
 	if abs(board[start_pos.x][start_pos.y]) == 1:
-		if end_pos.x == 7 && white || end_pos.x == 1 && !white:
+		if end_pos.x == 7 && white || end_pos.x == 0 && !white:
 			return true
 			
 	return false
