@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://3rg0c47qbmi0"]
+
+[ext_resource type="Script" uid="uid://dt2bkuoeax0ge" path="res://Scripts/start_menu.gd" id="1_juhg0"]
+
+[node name="StartMenu" type="CanvasLayer" unique_id=2114916660]
+script = ExtResource("1_juhg0")
+
+[node name="Control" type="VBoxContainer" parent="." unique_id=602159596]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 288.0
+offset_right = -288.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Local" type="Button" parent="Control" unique_id=328272286]
+layout_mode = 2
+text = "Local"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control" unique_id=1505069695]
+layout_mode = 2
+alignment = 1
+
+[node name="OnlineHost" type="Button" parent="Control/HBoxContainer" unique_id=1450904445]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Online HOST"
+
+[node name="OnlineJoin" type="Button" parent="Control/HBoxContainer" unique_id=1136303443]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Online JOIN"
+
+[connection signal="pressed" from="Control/Local" to="." method="_on_local_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/OnlineHost" to="." method="_on_online_host_pressed"]
+[connection signal="pressed" from="Control/HBoxContainer/OnlineJoin" to="." method="_on_online_join_pressed"]

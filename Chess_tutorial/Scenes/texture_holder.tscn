@@ -1,3 +1,6 @@
 [gd_scene format=3 uid="uid://c8snr6qequ51c"]
 
-[node name="texture_holder" type="Sprite2D"]
+[ext_resource type="Script" uid="uid://c31vii0nshkj5" path="res://Scripts/piece.gd" id="1_tqhe0"]
+
+[node name="texture_holder" type="Sprite2D" unique_id=47045120]
+script = ExtResource("1_tqhe0")

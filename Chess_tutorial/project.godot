@@ -15,10 +15,20 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Chess_tutorial"
-run/main_scene="res://Scenes/main.tscn"
+run/main_scene="uid://3rg0c47qbmi0"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Global="*uid://dw2f3ki2yx8bh"
+Multiplayer="*uid://dgfveux3hd88e"
+
+[display]
+
+window/stretch/mode="viewport"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.099985994, 0.099985994, 0.09998598, 1)

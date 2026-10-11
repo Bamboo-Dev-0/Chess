@@ -2,7 +2,6 @@
 
 [ext_resource type="Texture2D" uid="uid://ctsgdmugmedg5" path="res://Assets/white_knight.png" id="1_3khqn"]
 [ext_resource type="PackedScene" uid="uid://c5xblqofcwad0" path="res://Scenes/board.tscn" id="1_63gbl"]
-[ext_resource type="Script" uid="uid://dgfveux3hd88e" path="res://Scenes/Multiplayer.gd" id="1_kblsc"]
 [ext_resource type="Texture2D" uid="uid://dn55e0qqy2f8g" path="res://Assets/white_bishop.png" id="2_75nc3"]
 [ext_resource type="Texture2D" uid="uid://ctq0j6xxcqikw" path="res://Assets/white_rook.png" id="3_a7xec"]
 [ext_resource type="Texture2D" uid="uid://oqqp46qtmwfu" path="res://Assets/white_queen.png" id="4_2yafp"]
@@ -88,7 +87,6 @@ texture = ExtResource("8_df1ci")
 texture = ExtResource("8_df1ci")
 
 [node name="Main" type="Node2D" unique_id=402242581]
-script = ExtResource("1_kblsc")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1858781108]
 position = Vector2(72, -72)
@@ -213,4 +211,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_uj42o")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="Board" parent="." unique_id=1365474169 instance=ExtResource("1_63gbl")]
+[node name="Board" parent="." unique_id=1365474169 node_paths=PackedStringArray("white_pieces", "black_pieces", "camera") instance=ExtResource("1_63gbl")]
+white_pieces = NodePath("../CanvasLayer/white_pieces")
+black_pieces = NodePath("../CanvasLayer/black_pieces")
+camera = NodePath("../Camera2D")
