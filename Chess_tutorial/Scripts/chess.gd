@@ -14,10 +14,15 @@ const PIECE_MOVE = preload("res://Assets/Piece_move.png")
 @onready var dots = $Dots
 @onready var turn = $Turn
 
+@export_subgroup("Promotion Screen")
 @export var promotion_canvas: CanvasLayer
 @export var white_pieces: Node
 @export var black_pieces: Node
 @export var camera: Camera2D
+
+@export_subgroup("End Screen")
+@export var end_screen: CanvasLayer
+@export var end_screen_text: Label
 
 #Variables
 # -6 = black king
@@ -225,11 +230,11 @@ func set_move(start_pos : Vector2, end_pos : Vector2, promotion = null):
 		start_pos = end_pos
 		show_options()
 	elif is_stalemate():
-		if white_turn && is_in_check(white_king_pos) || !white_turn && is_in_check(black_king_pos): print("CHECKMATE")
-		else: print("DRAW")
+		if white_turn && is_in_check(white_king_pos) || !white_turn && is_in_check(black_king_pos): match_end("CHECKMATE")
+		else: match_end("DRAW")
 	
-	if fifty_move_rule == 50: print("DRAW")
-	elif insuficient_material(): print("DRAW")
+	if fifty_move_rule == 50: match_end("DRAW")
+	elif insuficient_material(): match_end("DRAW")
 
 func get_moves(selected : Vector2):
 	var _moves = []
@@ -541,7 +546,7 @@ func threefold_position(var1 : Array):
 	for i in unique_board_moves.size():
 		if var1 == unique_board_moves[i]:
 			amount_of_same[i] += 1
-			if amount_of_same[i] >= 3: print("DRAW")
+			if amount_of_same[i] >= 3: match_end("DRAW")
 			return
 	unique_board_moves.append(var1.duplicate(true))
 	amount_of_same.append(1)
@@ -555,3 +560,7 @@ func is_promotion_square(start_pos, end_pos) -> bool:
 
 func side(color) -> int:
 	return 1 if color else -1
+
+func match_end(condition_text):
+	end_screen.visible = true
+	end_screen_text.text = condition_text

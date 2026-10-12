@@ -219,8 +219,31 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_uj42o")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="Board" parent="." unique_id=1365474169 node_paths=PackedStringArray("promotion_canvas", "white_pieces", "black_pieces", "camera") instance=ExtResource("1_63gbl")]
+[node name="Board" parent="." unique_id=1365474169 node_paths=PackedStringArray("promotion_canvas", "white_pieces", "black_pieces", "camera", "end_screen", "end_screen_text") instance=ExtResource("1_63gbl")]
 promotion_canvas = NodePath("../PromotionPanel")
 white_pieces = NodePath("../PromotionPanel/white_pieces")
 black_pieces = NodePath("../PromotionPanel/black_pieces")
 camera = NodePath("../Camera2D")
+end_screen = NodePath("../EndScreen")
+end_screen_text = NodePath("../EndScreen/EndText")
+
+[node name="EndScreen" type="CanvasLayer" parent="." unique_id=1334676]
+visible = false
+
+[node name="background" type="ColorRect" parent="EndScreen" unique_id=258546485]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="EndText" type="Label" parent="EndScreen" unique_id=156586578]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "test"
+horizontal_alignment = 1
+vertical_alignment = 1
