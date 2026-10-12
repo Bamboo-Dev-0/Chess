@@ -10,9 +10,9 @@ const TURN_BLACK = preload("res://Assets/turn-black.png")
 
 const MOVE_DOT = preload("res://Assets/Piece_move.png")
 
-const HORIZONTAL_MOVES = [Vector2(0, 1), Vector2(0, -1), Vector2(1, 0), Vector2(-1, 0)]
-const DIAGONAL_MOVES = [Vector2(1, 1), Vector2(1, -1), Vector2(-1, 1), Vector2(-1, -1)]
-const KNIGHT_MOVES = [Vector2(2, 1), Vector2(2, -1), Vector2(1, 2), Vector2(1, -2), Vector2(-2, 1), Vector2(-2, -1), Vector2(-1, 2), Vector2(-1, -2)]
+const HORIZONTAL_MOVES = [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]
+const DIAGONAL_MOVES = [Vector2i(1, 1), Vector2i(1, -1), Vector2i(-1, 1), Vector2i(-1, -1)]
+const KNIGHT_MOVES = [Vector2i(2, 1), Vector2i(2, -1), Vector2i(1, 2), Vector2i(1, -2), Vector2i(-2, 1), Vector2i(-2, -1), Vector2i(-1, 2), Vector2i(-1, -2)]
 
 @onready var pieces = $Pieces
 @onready var dots = $Dots
@@ -61,8 +61,8 @@ var black_rook_right = false
 
 var en_passant = null
 
-var white_king_pos = Vector2(0, 4)
-var black_king_pos = Vector2(7, 4)
+var white_king_pos = Vector2i(0, 4)
+var black_king_pos = Vector2i(7, 4)
 
 var fifty_move_rule = 0
 
@@ -78,19 +78,19 @@ func _ready():
 	board.append([0, 0, 0, 0, 0, 0, 0, 0])
 	board.append([0, 0, 0, 0, 0, 0, 0, 0])
 	board.append([0, 0, 0, 0, 0, 0, 0, 0])
-	board.append([-1, -1, -1, -1, -1, -1, -1, -1])
+	board.append([-1, -1, -1, -1, -1, -1, 1, -1])
 	board.append([-4, -2, -3, -5, -6, -3, -2, -4])
 	
 	for button in get_tree().get_nodes_in_group("promotion_button"):
 		button.pressed.connect(on_promotion_button_pressed.bind(int(button.name.strip_edges())))
+	
+	if Global.local:
+		start_game(true)
 
 func start_game(_turn):
 	white_side = _turn
 	if !white_side:
 		camera.global_rotation_degrees = 180
-		
-		white_pieces.visible = false
-		black_pieces.visible = true
 	
 	spawn_board_display()
 
@@ -101,7 +101,7 @@ func _input(event):
 	if !event.is_action_pressed("left_click") || !get_rect().has_point(to_local(get_global_mouse_position())):
 		return
 	
-	var selected_position = Vector2(int(abs(snapped(get_global_mouse_position().y, 0)) / CELL_WIDTH), int(snapped(get_global_mouse_position().x, 0) / CELL_WIDTH))
+	var selected_position = Vector2i(int(abs(snapped(get_global_mouse_position().y, 0)) / CELL_WIDTH), int(snapped(get_global_mouse_position().x, 0) / CELL_WIDTH))
 	# Picked own piece
 	if side(white_turn) * board[selected_position.x][selected_position.y] > 0:
 		if selected_piece != selected_position:
@@ -156,7 +156,7 @@ func delete_dots():
 	for child in dots.get_children():
 		child.queue_free()
 
-func set_move(start_pos : Vector2, end_pos : Vector2, promotion = null):
+func set_move(start_pos : Vector2i, end_pos : Vector2i, promotion = null):
 	var just_now = false
 	
 	fifty_move_rule += 1
@@ -164,7 +164,8 @@ func set_move(start_pos : Vector2, end_pos : Vector2, promotion = null):
 	
 	match board[start_pos.x][start_pos.y]:
 		-1, 1:
-			if end_pos.x in [0, 7]: promote(end_pos, promotion)
+			if end_pos.x in [0, 7]:
+				promote(end_pos, promotion)
 			if end_pos.x == 4 && start_pos.x == 6 || end_pos.x == 3 && start_pos.x == 1:
 				en_passant = end_pos
 				just_now = true
@@ -209,6 +210,8 @@ func set_move(start_pos : Vector2, end_pos : Vector2, promotion = null):
 	board[end_pos.x][end_pos.y] = promotion if promotion != null else board[start_pos.x][start_pos.y]
 	board[start_pos.x][start_pos.y] = 0
 	white_turn = !white_turn
+	if Global.local:
+		white_side = !white_side
 	update_board_display()
 	
 	if is_stalemate():
@@ -217,7 +220,7 @@ func set_move(start_pos : Vector2, end_pos : Vector2, promotion = null):
 	
 	if fifty_move_rule == 50 || insuficient_material() || threefold_position(board): match_end("DRAW")
 
-func get_moves(selected : Vector2):
+func get_moves(selected : Vector2i):
 	var _moves = []
 	
 	match abs(board[selected.x][selected.y]):
@@ -230,7 +233,7 @@ func get_moves(selected : Vector2):
 	
 	return _moves
 
-func get_piece_moves(piece_type: int, piece_movement_limit: bool, piece_movement_directions: Array, piece_position: Vector2):
+func get_piece_moves(piece_type: int, piece_movement_limit: bool, piece_movement_directions: Array, piece_position: Vector2i):
 	var valid_moves = []
 	
 	for i in piece_movement_directions:
@@ -260,7 +263,7 @@ func get_piece_moves(piece_type: int, piece_movement_limit: bool, piece_movement
 	
 	return valid_moves
 
-func get_king_moves(piece_position : Vector2):
+func get_king_moves(piece_position : Vector2i):
 	var valid_moves = []
 	
 	if white_turn:
@@ -277,15 +280,15 @@ func get_king_moves(piece_position : Vector2):
 					valid_moves.append(pos)
 	
 	if white_turn && !white_king:
-		if !white_rook_left && is_empty(Vector2(0, 1)) && is_empty(Vector2(0, 2)) && !is_in_check(Vector2(0, 2)) && is_empty(Vector2(0, 3)) && !is_in_check(Vector2(0, 3)) && !is_in_check(Vector2(0, 4)):
-			valid_moves.append(Vector2(0, 2))
-		if !white_rook_right && !is_in_check(Vector2(0, 4)) && is_empty(Vector2(0, 5)) && !is_in_check(Vector2(0, 5)) && is_empty(Vector2(0, 6)) && !is_in_check(Vector2(0, 6)):
-			valid_moves.append(Vector2(0, 6))
+		if !white_rook_left && is_empty(Vector2i(0, 1)) && is_empty(Vector2i(0, 2)) && !is_in_check(Vector2i(0, 2)) && is_empty(Vector2i(0, 3)) && !is_in_check(Vector2i(0, 3)) && !is_in_check(Vector2i(0, 4)):
+			valid_moves.append(Vector2i(0, 2))
+		if !white_rook_right && !is_in_check(Vector2i(0, 4)) && is_empty(Vector2i(0, 5)) && !is_in_check(Vector2i(0, 5)) && is_empty(Vector2i(0, 6)) && !is_in_check(Vector2i(0, 6)):
+			valid_moves.append(Vector2i(0, 6))
 	elif !white_turn && !black_king:
-		if !black_rook_left && is_empty(Vector2(7, 1)) && is_empty(Vector2(7, 2)) && !is_in_check(Vector2(7, 2)) && is_empty(Vector2(7, 3)) && !is_in_check(Vector2(7, 3)) && !is_in_check(Vector2(7, 4)):
-			valid_moves.append(Vector2(7, 2))
-		if !black_rook_right && !is_in_check(Vector2(7, 4)) && is_empty(Vector2(7, 5)) && !is_in_check(Vector2(7, 5)) && is_empty(Vector2(7, 6)) && !is_in_check(Vector2(7, 6)):
-			valid_moves.append(Vector2(7, 6))
+		if !black_rook_left && is_empty(Vector2i(7, 1)) && is_empty(Vector2i(7, 2)) && !is_in_check(Vector2i(7, 2)) && is_empty(Vector2i(7, 3)) && !is_in_check(Vector2i(7, 3)) && !is_in_check(Vector2i(7, 4)):
+			valid_moves.append(Vector2i(7, 2))
+		if !black_rook_right && !is_in_check(Vector2i(7, 4)) && is_empty(Vector2i(7, 5)) && !is_in_check(Vector2i(7, 5)) && is_empty(Vector2i(7, 6)) && !is_in_check(Vector2i(7, 6)):
+			valid_moves.append(Vector2i(7, 6))
 	
 	if white_turn:
 		board[white_king_pos.x][white_king_pos.y] = 6
@@ -294,11 +297,11 @@ func get_king_moves(piece_position : Vector2):
 	
 	return valid_moves
 
-func get_pawn_moves(piece_position : Vector2):
+func get_pawn_moves(piece_position : Vector2i):
 	var valid_moves = []
 	var is_first_move = false
 	
-	var direction = Vector2(side(white_turn), 0)
+	var direction = Vector2i(side(white_turn), 0)
 	
 	if white_turn && piece_position.x == 1 || !white_turn && piece_position.x == 6: is_first_move = true
 	
@@ -320,7 +323,7 @@ func get_pawn_moves(piece_position : Vector2):
 		board[pos.x][pos.y] = 0
 		board[piece_position.x][piece_position.y] = side(white_turn)
 	
-	pos = piece_position + Vector2(direction.x, 1)
+	pos = piece_position + Vector2i(direction.x, 1)
 	if is_valid_position(pos):
 		if is_enemy(pos):
 			var t = board[pos.x][pos.y]
@@ -329,7 +332,7 @@ func get_pawn_moves(piece_position : Vector2):
 			if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): valid_moves.append(pos)
 			board[pos.x][pos.y] = t
 			board[piece_position.x][piece_position.y] = side(white_turn)
-	pos = piece_position + Vector2(direction.x, -1)
+	pos = piece_position + Vector2i(direction.x, -1)
 	if is_valid_position(pos):
 		if is_enemy(pos):
 			var t = board[pos.x][pos.y]
@@ -349,22 +352,24 @@ func get_pawn_moves(piece_position : Vector2):
 	
 	return valid_moves
 
-func is_valid_position(pos : Vector2):
+func is_valid_position(pos : Vector2i):
 	if pos.x >= 0 && pos.x < BOARD_SIZE && pos.y >= 0 && pos.y < BOARD_SIZE: return true
 	return false
 
-func is_empty(pos : Vector2):
+func is_empty(pos : Vector2i):
 	if board[pos.x][pos.y] == 0: return true
 	return false
-	
-func is_enemy(pos : Vector2):
+
+func is_enemy(pos : Vector2i):
 	if side(white_turn) * board[pos.x][pos.y] < 0: return true
 	return false
 
-func promote(pos : Vector2, promotion = null):
+func promote(pos : Vector2i, promotion = null):
 	if promotion == null:
 		promotion_square = pos
 		promotion_canvas.visible = true
+		white_pieces.visible = white_side
+		black_pieces.visible = !white_side
 	else:
 		board[pos.x][pos.y] = promotion * side(white_turn)
 
@@ -375,13 +380,13 @@ func on_promotion_button_pressed(value):
 	promotion_square = null
 	update_board_display()
 
-func is_in_check(king_pos: Vector2):
+func is_in_check(king_pos: Vector2i):
 	var directions = HORIZONTAL_MOVES + DIAGONAL_MOVES
 	
 	var pawn_direction = side(white_turn)
 	var pawn_attacks = [
-		king_pos + Vector2(pawn_direction, 1),
-		king_pos + Vector2(pawn_direction, -1)
+		king_pos + Vector2i(pawn_direction, 1),
+		king_pos + Vector2i(pawn_direction, -1)
 	]
 	
 	for i in pawn_attacks:
@@ -417,7 +422,7 @@ func is_stalemate():
 	for i in BOARD_SIZE:
 		for j in BOARD_SIZE:
 			if side(white_turn) * board[i][j] > 0:
-				if get_moves(Vector2(i, j)) != []: return false
+				if get_moves(Vector2i(i, j)) != []: return false
 	
 	return true
 

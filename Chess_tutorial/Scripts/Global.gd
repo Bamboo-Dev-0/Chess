@@ -14,5 +14,6 @@ var board = null
 
 # TODO
 # 1. Chess notation to move data
-# 2. Restructure of script
-# 3. Move history
+# 2. Move history
+# 3. Local play
+# 4. Server play

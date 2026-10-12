@@ -33,6 +33,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "Online JOIN"
 
+[node name="Server" type="Button" parent="Control" unique_id=2103879493]
+layout_mode = 2
+text = "Join Server"
+
 [connection signal="pressed" from="Control/Local" to="." method="_on_local_pressed"]
 [connection signal="pressed" from="Control/HBoxContainer/OnlineHost" to="." method="_on_online_host_pressed"]
 [connection signal="pressed" from="Control/HBoxContainer/OnlineJoin" to="." method="_on_online_join_pressed"]
