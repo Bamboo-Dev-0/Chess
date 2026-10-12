@@ -93,10 +93,18 @@ position = Vector2(72, -72)
 ignore_rotation = false
 zoom = Vector2(4, 4)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=978865421]
-
-[node name="white_pieces" type="Control" parent="CanvasLayer" unique_id=322418960]
+[node name="PromotionPanel" type="CanvasLayer" parent="." unique_id=978865421]
 visible = false
+
+[node name="background" type="ColorRect" parent="PromotionPanel" unique_id=1618542179]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.39215687)
+
+[node name="white_pieces" type="Control" parent="PromotionPanel" unique_id=322418960]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -110,7 +118,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="2" type="Button" parent="CanvasLayer/white_pieces" unique_id=139361887 groups=["white_pieces"]]
+[node name="2" type="Button" parent="PromotionPanel/white_pieces" unique_id=139361887 groups=["promotion_button"]]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
@@ -120,7 +128,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_djh8o")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="3" type="Button" parent="CanvasLayer/white_pieces" unique_id=1092500946 groups=["white_pieces"]]
+[node name="3" type="Button" parent="PromotionPanel/white_pieces" unique_id=1092500946 groups=["promotion_button"]]
 layout_mode = 0
 offset_left = 100.0
 offset_right = 200.0
@@ -131,7 +139,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_r62nm")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="4" type="Button" parent="CanvasLayer/white_pieces" unique_id=179529727 groups=["white_pieces"]]
+[node name="4" type="Button" parent="PromotionPanel/white_pieces" unique_id=179529727 groups=["promotion_button"]]
 layout_mode = 0
 offset_left = 200.0
 offset_right = 300.0
@@ -142,7 +150,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_xahkn")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="5" type="Button" parent="CanvasLayer/white_pieces" unique_id=1760505675 groups=["white_pieces"]]
+[node name="5" type="Button" parent="PromotionPanel/white_pieces" unique_id=1760505675 groups=["promotion_button"]]
 layout_mode = 0
 offset_left = 300.0
 offset_right = 400.0
@@ -153,7 +161,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_jh1bq")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="black_pieces" type="Control" parent="CanvasLayer" unique_id=2090525566]
+[node name="black_pieces" type="Control" parent="PromotionPanel" unique_id=2090525566]
 visible = false
 layout_mode = 3
 anchors_preset = 8
@@ -168,7 +176,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="2" type="Button" parent="CanvasLayer/black_pieces" unique_id=121908391 groups=["black_pieces"]]
+[node name="-2" type="Button" parent="PromotionPanel/black_pieces" unique_id=121908391 groups=["promotion_button"]]
 layout_mode = 0
 offset_right = 100.0
 offset_bottom = 100.0
@@ -178,7 +186,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_0e7vx")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="3" type="Button" parent="CanvasLayer/black_pieces" unique_id=900418585 groups=["black_pieces"]]
+[node name="-3" type="Button" parent="PromotionPanel/black_pieces" unique_id=900418585 groups=["promotion_button"]]
 layout_mode = 0
 offset_left = 100.0
 offset_right = 200.0
@@ -189,7 +197,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_cgwqf")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="4" type="Button" parent="CanvasLayer/black_pieces" unique_id=410186169 groups=["black_pieces"]]
+[node name="-4" type="Button" parent="PromotionPanel/black_pieces" unique_id=410186169 groups=["promotion_button"]]
 layout_mode = 0
 offset_left = 200.0
 offset_right = 300.0
@@ -200,7 +208,7 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_6mk8i")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="5" type="Button" parent="CanvasLayer/black_pieces" unique_id=1446773803 groups=["black_pieces"]]
+[node name="-5" type="Button" parent="PromotionPanel/black_pieces" unique_id=1446773803 groups=["promotion_button"]]
 layout_mode = 0
 offset_left = 300.0
 offset_right = 400.0
@@ -211,7 +219,8 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_uj42o")
 theme_override_styles/disabled = SubResource("StyleBoxEmpty_s8r64")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vp5if")
 
-[node name="Board" parent="." unique_id=1365474169 node_paths=PackedStringArray("white_pieces", "black_pieces", "camera") instance=ExtResource("1_63gbl")]
-white_pieces = NodePath("../CanvasLayer/white_pieces")
-black_pieces = NodePath("../CanvasLayer/black_pieces")
+[node name="Board" parent="." unique_id=1365474169 node_paths=PackedStringArray("promotion_canvas", "white_pieces", "black_pieces", "camera") instance=ExtResource("1_63gbl")]
+promotion_canvas = NodePath("../PromotionPanel")
+white_pieces = NodePath("../PromotionPanel/white_pieces")
+black_pieces = NodePath("../PromotionPanel/black_pieces")
 camera = NodePath("../Camera2D")
