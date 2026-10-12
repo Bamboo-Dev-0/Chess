@@ -158,33 +158,24 @@ func delete_dots():
 
 func set_move(start_pos : Vector2, end_pos : Vector2, promotion = null):
 	var just_now = false
+	
 	fifty_move_rule += 1
-	if is_enemy(end_pos): fifty_move_rule = 0
+	if is_enemy(end_pos) || board[start_pos.x][start_pos.y] in [-1, 1]: fifty_move_rule = 0
+	
 	match board[start_pos.x][start_pos.y]:
-		1:
-			fifty_move_rule = 0
-			if end_pos.x == 7: promote(end_pos, promotion)
-			if end_pos.x == 3 && start_pos.x == 1:
+		-1, 1:
+			if end_pos.x in [0, 7]: promote(end_pos, promotion)
+			if end_pos.x == 4 && start_pos.x == 6 || end_pos.x == 3 && start_pos.x == 1:
 				en_passant = end_pos
 				just_now = true
-			elif en_passant != null:
-				if en_passant.y == end_pos.y && start_pos.y != end_pos.y && en_passant.x == start_pos.x:
-					board[en_passant.x][en_passant.y] = 0
-		-1:
-			fifty_move_rule = 0
-			if end_pos.x == 0: promote(end_pos, promotion)
-			if end_pos.x == 4 && start_pos.x == 6:
-				en_passant = end_pos
-				just_now = true
-			elif en_passant != null:
-				if en_passant.y == end_pos.y && start_pos.y != end_pos.y && en_passant.x == start_pos.x:
-					board[en_passant.x][en_passant.y] = 0
+			elif en_passant != null && en_passant.y == end_pos.y && start_pos.y != end_pos.y && en_passant.x == start_pos.x:
+				board[en_passant.x][en_passant.y] = 0
 		4:
-			if start_pos.x == 0 && start_pos.y == 0: white_rook_left = true
-			elif start_pos.x == 0 && start_pos.y == 7: white_rook_right = true
+			if start_pos.y == 0: white_rook_left = true
+			elif start_pos.y == 7: white_rook_right = true
 		-4:
-			if start_pos.x == 7 && start_pos.y == 0: black_rook_left = true
-			elif start_pos.x == 7 && start_pos.y == 7: black_rook_right = true
+			if start_pos.y == 0: black_rook_left = true
+			elif start_pos.y == 7: black_rook_right = true
 		6:
 			if start_pos.x == 0 && start_pos.y == 4:
 				white_king = true
@@ -215,27 +206,16 @@ func set_move(start_pos : Vector2, end_pos : Vector2, promotion = null):
 			black_king_pos = end_pos
 	if !just_now: en_passant = null
 	
-	if promotion != null:
-		board[end_pos.x][end_pos.y] = promotion
-	else:
-		board[end_pos.x][end_pos.y] = board[start_pos.x][start_pos.y]
-	
+	board[end_pos.x][end_pos.y] = promotion if promotion != null else board[start_pos.x][start_pos.y]
 	board[start_pos.x][start_pos.y] = 0
-	
 	white_turn = !white_turn
-	
-	threefold_position(board)
 	update_board_display()
 	
-	if (start_pos.x != end_pos.x || start_pos.y != end_pos.y) && side(white_turn) * board[end_pos.x][end_pos.y] > 0:
-		start_pos = end_pos
-		show_options()
-	elif is_stalemate():
+	if is_stalemate():
 		if white_turn && is_in_check(white_king_pos) || !white_turn && is_in_check(black_king_pos): match_end("CHECKMATE")
-		else: match_end("DRAW. STALEMATE")
+		else: match_end("DRAW")
 	
-	if fifty_move_rule == 50: match_end("DRAW. 50 MOVE RULE")
-	elif insuficient_material(): match_end("DRAW. INSUFICIENT MATERIAL")
+	if fifty_move_rule == 50 || insuficient_material() || threefold_position(board): match_end("DRAW")
 
 func get_moves(selected : Vector2):
 	var _moves = []
@@ -306,7 +286,7 @@ func get_king_moves(piece_position : Vector2):
 			valid_moves.append(Vector2(7, 2))
 		if !black_rook_right && !is_in_check(Vector2(7, 4)) && is_empty(Vector2(7, 5)) && !is_in_check(Vector2(7, 5)) && is_empty(Vector2(7, 6)) && !is_in_check(Vector2(7, 6)):
 			valid_moves.append(Vector2(7, 6))
-			
+	
 	if white_turn:
 		board[white_king_pos.x][white_king_pos.y] = 6
 	else:
@@ -381,12 +361,12 @@ func is_enemy(pos : Vector2):
 	if side(white_turn) * board[pos.x][pos.y] < 0: return true
 	return false
 
-func promote(_var : Vector2, promotion = null):
+func promote(pos : Vector2, promotion = null):
 	if promotion == null:
-		promotion_square = _var
+		promotion_square = pos
 		promotion_canvas.visible = true
 	else:
-		board[_var.x][_var.y] = promotion * side(white_turn)
+		board[pos.x][pos.y] = promotion * side(white_turn)
 
 func on_promotion_button_pressed(value):
 	board[promotion_square.x][promotion_square.y] = value
@@ -459,14 +439,15 @@ func insuficient_material():
 					return false
 	return true
 
-func threefold_position(var1 : Array):
+func threefold_position(var1 : Array) -> bool:
 	for i in unique_board_moves.size():
 		if var1 == unique_board_moves[i]:
 			amount_of_same[i] += 1
-			if amount_of_same[i] >= 3: match_end("DRAW")
-			return
+			if amount_of_same[i] >= 3: return true
 	unique_board_moves.append(var1.duplicate(true))
 	amount_of_same.append(1)
+	
+	return false
 
 func is_promotion_square(start_pos, end_pos) -> bool:
 	if abs(board[start_pos.x][start_pos.y]) == 1:
