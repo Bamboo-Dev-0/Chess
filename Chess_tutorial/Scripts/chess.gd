@@ -295,7 +295,7 @@ func get_king_moves(piece_position : Vector2):
 	return valid_moves
 
 func get_pawn_moves(piece_position : Vector2):
-	var _moves = []
+	var valid_moves = []
 	var is_first_move = false
 	
 	var direction = Vector2(side(white_turn), 0)
@@ -303,12 +303,12 @@ func get_pawn_moves(piece_position : Vector2):
 	if white_turn && piece_position.x == 1 || !white_turn && piece_position.x == 6: is_first_move = true
 	
 	if en_passant != null && (white_turn && piece_position.x == 4 || !white_turn && piece_position.x == 3) && abs(en_passant.y - piece_position.y) == 1:
-		var pos = en_passant + direction
-		board[pos.x][pos.y] = side(white_turn)
+		var _pos = en_passant + direction
+		board[_pos.x][_pos.y] = side(white_turn)
 		board[piece_position.x][piece_position.y] = 0
 		board[en_passant.x][en_passant.y] = 0
-		if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): _moves.append(pos)
-		board[pos.x][pos.y] = 0
+		if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): valid_moves.append(_pos)
+		board[_pos.x][_pos.y] = 0
 		board[piece_position.x][piece_position.y] = side(white_turn)
 		board[en_passant.x][en_passant.y] = -side(white_turn)
 	
@@ -316,7 +316,7 @@ func get_pawn_moves(piece_position : Vector2):
 	if is_empty(pos):
 		board[pos.x][pos.y] = side(white_turn)
 		board[piece_position.x][piece_position.y] = 0
-		if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): _moves.append(pos)
+		if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): valid_moves.append(pos)
 		board[pos.x][pos.y] = 0
 		board[piece_position.x][piece_position.y] = side(white_turn)
 	
@@ -326,7 +326,7 @@ func get_pawn_moves(piece_position : Vector2):
 			var t = board[pos.x][pos.y]
 			board[pos.x][pos.y] = side(white_turn)
 			board[piece_position.x][piece_position.y] = 0
-			if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): _moves.append(pos)
+			if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): valid_moves.append(pos)
 			board[pos.x][pos.y] = t
 			board[piece_position.x][piece_position.y] = side(white_turn)
 	pos = piece_position + Vector2(direction.x, -1)
@@ -335,7 +335,7 @@ func get_pawn_moves(piece_position : Vector2):
 			var t = board[pos.x][pos.y]
 			board[pos.x][pos.y] = side(white_turn)
 			board[piece_position.x][piece_position.y] = 0
-			if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): _moves.append(pos)
+			if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): valid_moves.append(pos)
 			board[pos.x][pos.y] = t
 			board[piece_position.x][piece_position.y] = side(white_turn)
 		
@@ -343,11 +343,11 @@ func get_pawn_moves(piece_position : Vector2):
 	if is_first_move && is_empty(pos) && is_empty(piece_position + direction):
 		board[pos.x][pos.y] = side(white_turn)
 		board[piece_position.x][piece_position.y] = 0
-		if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): _moves.append(pos)
+		if white_turn && !is_in_check(white_king_pos) || !white_turn && !is_in_check(black_king_pos): valid_moves.append(pos)
 		board[pos.x][pos.y] = 0
 		board[piece_position.x][piece_position.y] = side(white_turn)
 	
-	return _moves
+	return valid_moves
 
 func is_valid_position(pos : Vector2):
 	if pos.x >= 0 && pos.x < BOARD_SIZE && pos.y >= 0 && pos.y < BOARD_SIZE: return true
