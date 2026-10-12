@@ -78,7 +78,7 @@ func _ready():
 	board.append([0, 0, 0, 0, 0, 0, 0, 0])
 	board.append([0, 0, 0, 0, 0, 0, 0, 0])
 	board.append([0, 0, 0, 0, 0, 0, 0, 0])
-	board.append([-1, -1, -1, -1, -1, -1, 1, -1])
+	board.append([-1, -1, -1, -1, -1, -1, -1, -1])
 	board.append([-4, -2, -3, -5, -6, -3, -2, -4])
 	
 	for button in get_tree().get_nodes_in_group("promotion_button"):
